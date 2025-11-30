@@ -4,7 +4,7 @@ requires 'perl' => '5.034';
 # Runtime dependencies
 requires 'MP3::Tag';
 requires 'Getopt::Long' => '2.58';
-requires 'File::Find' => '1.42';
+requires 'File::Find' => '1.39';
 requires 'File::Basename' => '2.85';
 requires 'Cwd' => '3.75';
 

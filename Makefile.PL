@@ -9,7 +9,7 @@ WriteMakefile(
     PREREQ_PM     => {
         'MP3::Tag'      => '1.16',
         'Getopt::Long'  => '2.58',
-        'File::Find'    => '1.44',
+        'File::Find'    => '1.39',
         'File::Basename'=> '2.86',
         'Cwd'           => '3.75',
     },
