@@ -23,6 +23,9 @@ jobs:
         perl-version: ${{ matrix.perl }}
 
     - name: Install dependencies
+      env:
+        PERL_MM_USE_DEFAULT: 1
+        PERL_EXTUTILS_AUTOINSTALL: --defaultdeps
       run: |
         cpanm --quiet --notest --installdeps --with-develop .
 
