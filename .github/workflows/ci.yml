@@ -36,4 +36,4 @@ jobs:
 
     - name: Check formatting
       run: |
-        perltidy --check bin/fix-mp3-tags lib/
+        find bin lib -name '*.pl' -o -name '*.pm' | xargs -n1 perltidy --check
