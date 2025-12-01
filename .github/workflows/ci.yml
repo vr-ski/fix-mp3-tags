@@ -42,6 +42,14 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-cpan-
 
+    - name: Debug cache
+      if: matrix.os == 'windows-latest'
+      run: |
+        echo "Cache hit: ${{ steps.cache-cpan.outputs.cache-hit }}"
+        if [ -d "local" ]; then
+          echo "Local dir exists with $(find local -name "*.pm" | wc -l) .pm files"
+        fi
+
     - name: Install dependencies
       env:
         PERL_MM_USE_DEFAULT: 1
