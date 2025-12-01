@@ -30,6 +30,18 @@ jobs:
         perl-version: ${{ matrix.perl }}
         windows-job-type: 'strawberry-perl'
 
+    - name: Cache CPAN modules
+      if: matrix.os == 'windows-latest'
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cpanm
+          C:\Users\runneradmin\.cpanm  # Windows
+          ${{ github.workspace }}/local
+        key: ${{ runner.os }}-cpan-${{ hashFiles('**/cpanfile', '**/META.yml', '**/META.json') }}
+        restore-keys: |
+          ${{ runner.os }}-cpan-
+
     - name: Install dependencies
       env:
         PERL_MM_USE_DEFAULT: 1
