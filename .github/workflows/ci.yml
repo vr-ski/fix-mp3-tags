@@ -37,6 +37,15 @@ jobs:
       run: |
         perlcritic --quiet bin/fix-mp3-tags lib/
 
-    - name: Check formatting
+    - name: Check formatting (Unix)
+      if: matrix.os != 'windows-latest'
       run: |
         find bin lib -name '*.pl' -o -name '*.pm' | xargs -n1 perltidy --check
+
+    - name: Check formatting (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: pwsh
+      run: |
+        Get-ChildItem -Recurse -Path bin,lib -Include *.pl,*.pm | ForEach-Object {
+          perltidy --check $_.FullName
+        }
