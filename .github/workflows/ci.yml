@@ -42,6 +42,28 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-perl-
 
+    - name: Show cache save state
+      if: always()  # <-- Run even if job fails
+      shell: bash
+      run: |
+        echo "=== Cache Save Debug ==="
+        echo "Cache hit during restore: ${{ steps.cache-cpan.outputs.cache-hit }}"
+        echo ""
+        echo "Checking if local directory exists for caching..."
+        if [ -d "local" ]; then
+          echo "✅ local directory exists"
+          echo "Contents:"
+          ls -la local/
+          echo ""
+          echo "Total size:"
+          du -sh local || echo "Could not compute size"
+        else
+          echo "❌ local directory DOES NOT EXIST"
+          echo "Current directory: $(pwd)"
+          echo "Directory contents:"
+          ls -la
+        fi
+
     - name: Debug cache
       if: matrix.os == 'windows-latest'
       shell: bash
