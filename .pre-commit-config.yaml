@@ -1,0 +1,50 @@
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+      - id: check-symlinks
+      - id: check-merge-conflict
+
+  - repo: local
+    hooks:
+      - id: perl-syntax
+        name: Check Perl syntax
+        entry: bash -c
+        args: ['find bin lib t -name "*.pm" -o -name "*.pl" -o -name "*.t" | xargs -I {} perl -c {}']
+        language: system
+        pass_filenames: false
+
+      - id: perl-critic
+        name: Run Perl Critic
+        entry: perlcritic
+        language: system
+        types: [file]
+        files: '\.(pm|pl)$'
+        args: [--quiet]
+
+      - id: perltidy-check
+        name: Check code formatting
+        entry: perltidy
+        language: system
+        types: [file]
+        files: '\.(pm|pl)$'
+        args: [--check]
+
+      - id: perl-tests
+        name: Run tests
+        entry: prove
+        language: system
+        args: [-l, t/]
+        pass_filenames: false
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.29.0
+    hooks:
+      - id: gitleaks
+        args: ["--staged"]  # Only check staged files for performance

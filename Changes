@@ -1,0 +1,6 @@
+Revision history for FixMP3Tags
+
+0.0.0  2025-11-29
+    - Initial release
+    - Basic MP3 tag fixing functionality
+    - User-defined pattern support

@@ -1,0 +1,66 @@
+name: CI - Linting
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        perl: [ '5.34', '5.36' ]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Cache Perl installation
+      id: cache-perl
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/perl5
+          /usr/local/perl
+          ${{ runner.tool_cache }}/perl
+          C:\hostedtoolcache\windows\perl
+        key: ${{ matrix.os }}-perl-${{ matrix.perl }}-setup
+
+    - name: Set up Perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: ${{ matrix.perl }}
+
+    - name: Cache CPAN modules
+      id: cache-cpan
+      uses: actions/cache@v4
+      with:
+        path: |
+          local
+        key: ${{ matrix.os }}-${{ matrix.perl }}-perl-${{ hashFiles('cpanfile') }}
+        restore-keys: |
+          ${{ matrix.os }}-${{ matrix.perl }}-perl-
+
+    - name: Install dependencies
+      if: steps.cache-cpan.outputs.cache-hit != 'true'
+      env:
+        PERL_MM_USE_DEFAULT: 1
+        PERL_EXTUTILS_AUTOINSTALL: --defaultdeps
+      run: |
+        cpanm --quiet --notest -l local --installdeps --with-develop .
+
+    - name: Run tests
+      run: |
+        prove -l t/
+
+    - name: Perl Critic
+      run: |
+        perlcritic --quiet bin/fix-mp3-tags lib/
+
+    - name: Check formatting (Unix)
+      if: matrix.os != 'windows-latest'
+      shell: bash
+      run: |
+        find bin lib -name '*.pl' -o -name '*.pm' | xargs -n1 perltidy --check
