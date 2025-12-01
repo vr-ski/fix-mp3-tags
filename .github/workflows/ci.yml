@@ -51,6 +51,25 @@ jobs:
           echo "Local dir exists with $(find local -name "*.pm" | wc -l) .pm files"
         fi
 
+    - name: Debug cache key
+      if: matrix.os == 'windows-latest'
+      shell: bash
+      run: |
+        echo "=== Cache Debug ==="
+        echo "Runner OS: ${{ runner.os }}"
+        echo "Current directory: $(pwd)"
+        echo "Workspace: ${{ github.workspace }}"
+
+        # Check what files we're hashing
+        echo ""
+        echo "Files that affect cache key:"
+        ls -la cpanfile META.yml META.json 2>/dev/null || echo "No meta files found"
+
+        # Show the hash if files exist
+        if [ -f "cpanfile" ]; then
+          echo "cpanfile exists, hash would be: $(sha256sum cpanfile | cut -d' ' -f1)"
+        fi
+
     - name: Install dependencies
       env:
         PERL_MM_USE_DEFAULT: 1
