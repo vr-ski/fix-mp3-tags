@@ -38,9 +38,9 @@ jobs:
           ~/.cpanm
           C:\Users\runneradmin\.cpanm  # Windows
           ${{ github.workspace }}/local
-        key: ${{ runner.os }}-cpan-${{ hashFiles('**/cpanfile', '**/META.yml', '**/META.json') }}
+        key: ${{ runner.os }}-perl-${{ hashFiles('cpanfile') }}
         restore-keys: |
-          ${{ runner.os }}-cpan-
+          ${{ runner.os }}-perl-
 
     - name: Debug cache
       if: matrix.os == 'windows-latest'
@@ -71,6 +71,7 @@ jobs:
         fi
 
     - name: Install dependencies
+      if: steps.cache-cpan.outputs.cache-hit != 'true'
       env:
         PERL_MM_USE_DEFAULT: 1
         PERL_EXTUTILS_AUTOINSTALL: --defaultdeps
