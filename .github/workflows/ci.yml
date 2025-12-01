@@ -17,6 +17,17 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
+    - name: Cache Perl installation
+      id: cache-perl
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/perl5
+          /usr/local/perl
+          ${{ runner.tool_cache }}/perl
+          C:\hostedtoolcache\windows\perl
+        key: ${{ matrix.os }}-perl-${{ matrix.perl }}-setup
+
     - name: Set up Perl
       uses: shogo82148/actions-setup-perl@v1
       with:
