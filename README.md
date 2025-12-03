@@ -1,12 +1,12 @@
-# ⚠️ Important Warning
+# Fix MP3 Tags
+[![CI - Linting](https://github.com/vr-ski/fix-mp3-tags/actions/workflows/ci.yml/badge.svg)](https://github.com/vr-ski/fix-mp3-tags/actions/workflows/ci.yml)
+A fast Perl script to fix MP3 tags based on directory structure.
+
+# ⚠️ Important Warnin
 
 **WARNING: This tool will irreversibly erase all existing ID3 tags and replace them with new tags extracted from your directory structure. Always test with the `-n` (dry-run) option first and backup your files before processing!**
 
 **Custom pattern feature is currently experimental and may not work as expected in all cases.**
-
-# Fix MP3 Tags
-
-A fast Perl script to fix MP3 tags based on directory structure.
 
 ## Features
 
