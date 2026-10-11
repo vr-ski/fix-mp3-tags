@@ -6,6 +6,7 @@ Changes
 CODEOWNERS
 CONTRIBUTING.md
 cpanfile
+lib/FixMP3Tags.pm
 lib/FixMP3Tags/Processor.pm
 LICENSE
 Makefile.PL
