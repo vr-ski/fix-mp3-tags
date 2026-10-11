@@ -1,21 +1,24 @@
-use 5.034;
+use 5.010;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
     NAME          => 'FixMP3Tags',
-    VERSION_FROM  => 'bin/fix-mp3-tags',
+    VERSION_FROM  => 'lib/FixMP3Tags/Processor.pm',
     AUTHOR        => 'vr-ski 166657596+vr-ski@users.noreply.github.com',
     ABSTRACT      => 'Fix MP3 tags from directory structure',
+    MIN_PERL_VERSION => '5.010',
     PREREQ_PM     => {
         'MP3::Tag'      => '1.16',
-        'Getopt::Long'  => '2.58',
-        'File::Find'    => '1.39',
-        'File::Basename'=> '2.86',
-        'Cwd'           => '3.75',
+    },
+    CONFIGURE_REQUIRES => {
+        'ExtUtils::MakeMaker' => '7.22',
+    },
+    TEST_REQUIRES => {
+        'Test::More' => '0.90',
     },
     EXE_FILES     => ['bin/fix-mp3-tags'],
     test          => { TESTS => 't/*.t' },
-    LICENSE       => 'bsd',
+    LICENSE       => 'freebsd',
     META_MERGE    => {
         'meta-spec' => { version => 2 },
         resources   => {

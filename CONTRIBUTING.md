@@ -10,7 +10,7 @@ FixMP3Tags is a command-line tool for fixing and normalizing MP3 ID3 tags. It ai
 
 - Lightweight and dependency-minimal (core Perl + essential MP3 modules)
 - Cross-platform (Linux, macOS, Windows with Perl)
-- Safe and non-destructive (always backs up original files)
+- Destructive tag replacement, with a dry-run mode and backup guidance
 - Flexible with user-defined patterns and rules
 
 ---
@@ -18,7 +18,7 @@ FixMP3Tags is a command-line tool for fixing and normalizing MP3 ID3 tags. It ai
 ## 🧰 How to Contribute
 
 ### 🐛 Report Bugs
-- Search [issues](https://github.com/yourusername/fix-mp3-tags/issues) first to avoid duplicates
+- Search [issues](https://github.com/vr-ski/fix-mp3-tags/issues) first to avoid duplicates
 - Include:
   - OS and Perl version (`perl -v`)
   - MP3 file examples (if possible)
@@ -52,7 +52,7 @@ FixMP3Tags is a command-line tool for fixing and normalizing MP3 ID3 tags. It ai
 ## 🧪 Development Setup
 
 ```bash
-git clone https://github.com/yourusername/fix-mp3-tags.git
+git clone https://github.com/vr-ski/fix-mp3-tags.git
 cd fix-mp3-tags
 
 # Install dependencies
@@ -147,7 +147,6 @@ For maintainers:
 2. Update `Changes` file with release notes
 3. Commit and tag: `git tag -a v0.02 -m "Release 0.02"`
 4. Push tags: `git push --tags`
-5. Create GitHub release (triggers CPAN upload)
 
 ---
 

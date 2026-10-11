@@ -1,0 +1,35 @@
+# This workflow is managed by gh actions-lock.
+
+name: CPAN dependency audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '23 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Audit CPAN dependencies (report-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.1.0
+
+      - name: Set up Perl
+        uses: shogo82148/actions-setup-perl@v1.44.2
+        with:
+          perl-version: '5.44'
+
+      - name: Install CPAN::Audit
+        run: cpanm --quiet --notest CPAN::Audit
+
+      - name: Audit declared dependencies
+        # Keep this non-blocking until the existing core/runtime findings are triaged.
+        continue-on-error: true
+        run: cpan-audit --fresh deps .

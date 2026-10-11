@@ -3,16 +3,16 @@
 .pre-commit-config.yaml
 bin/fix-mp3-tags
 Changes
+CODEOWNERS
+CONTRIBUTING.md
 cpanfile
-FixMP3Tags-0/META.json
-FixMP3Tags-0/META.yml
 lib/FixMP3Tags/Processor.pm
 LICENSE
 Makefile.PL
-MANIFEST
-META.json
-quick-setup.sh
+MANIFEST			This list of files
 README.md
 t/00-basic.t
 t/01-processor.t
 t/02-user-patterns.t
+t/03-processing.t
+xt/author/kwalitee.t
