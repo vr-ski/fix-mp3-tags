@@ -10,6 +10,8 @@ use File::Basename;
 use Cwd 'abs_path';
 use Getopt::Long;
 
+use FixMP3Tags ();
+
 # Use MP3::Tag for ID3v2 writing
 eval {
 	require MP3::Tag;
@@ -19,8 +21,6 @@ if ($@)
 {
 	die "MP3::Tag required: sudo cpan MP3::Tag\n";
 }
-
-our $VERSION = '0.01';
 
 my @CD_PATTERNS = qw/cd disk disc part volume/;
 
@@ -421,7 +421,7 @@ HELP
 
 sub show_version
 {
-	print "fix-mp3-tags version $VERSION\n";
+	print "fix-mp3-tags version $FixMP3Tags::VERSION\n";
 	exit 0;
 }
 

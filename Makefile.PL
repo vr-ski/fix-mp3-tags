@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     NAME          => 'FixMP3Tags',
-    VERSION_FROM  => 'lib/FixMP3Tags/Processor.pm',
+    VERSION_FROM  => 'lib/FixMP3Tags.pm',
     AUTHOR        => 'vr-ski 166657596+vr-ski@users.noreply.github.com',
     ABSTRACT      => 'Fix MP3 tags from directory structure',
     MIN_PERL_VERSION => '5.010',

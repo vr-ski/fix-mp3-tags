@@ -277,7 +277,7 @@ is($help_status, 0, '--help exits successfully');
 like($help_output, qr/Usage: fix-mp3-tags/, '--help prints usage');
 my ($version_status, $version_output) = run_cli('--version');
 is($version_status, 0, '--version exits successfully');
-like($version_output, qr/version 0\.01/, '--version prints the distribution version');
+like($version_output, qr/\Q$FixMP3Tags::VERSION\E/, '--version prints the distribution version');
 my ($missing_directory_status, $missing_directory_output) = run_cli(
     '--directory', File::Spec->catdir($temp_dir, 'missing-directory')
 );

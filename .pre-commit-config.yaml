@@ -16,7 +16,7 @@ repos:
       - id: perl-syntax
         name: Check Perl syntax
         entry: bash -c
-        args: ['find bin lib t -name "*.pm" -o -name "*.pl" -o -name "*.t" | xargs -I {} perl -c {}']
+        args: ['find bin lib t -name "*.pm" -o -name "*.pl" -o -name "*.t" | xargs -I {} perl -Ilib -c {}']
         language: system
         pass_filenames: false
 

@@ -34,7 +34,7 @@ jobs:
           [[ "$RELEASE_VERSION" =~ ^v[0-9]+\.[0-9]+$ ]]
           MODULE_VERSION="${RELEASE_VERSION#v}"
           grep -Fq "our \$VERSION = '$MODULE_VERSION';" \
-            lib/FixMP3Tags/Processor.pm
+            lib/FixMP3Tags.pm
 
       - name: Install runtime dependencies
         env:
@@ -48,6 +48,10 @@ jobs:
           perl Makefile.PL
           make disttest
           make dist
+          echo "--- after dist ---"
+          ls -la
+          echo "--- tarballs ---"
+          ls -la *.tar.gz || echo "NO TARBALLS"
 
       - name: Verify distribution archive
         id: dist
