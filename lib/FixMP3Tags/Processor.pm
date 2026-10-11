@@ -20,7 +20,7 @@ if ($@)
 	die "MP3::Tag required: sudo cpan MP3::Tag\n";
 }
 
-our $VERSION = '0.1.0';
+our $VERSION = '0.01';
 
 my @CD_PATTERNS = qw/cd disk disc part volume/;
 
