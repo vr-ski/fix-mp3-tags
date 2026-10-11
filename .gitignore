@@ -3,9 +3,11 @@
 /META.yml
 /META.json
 /MYMETA.*
+/FixMP3Tags-*
 *.o
 *.pm.tdy
 *.bs
+
 
 # Devel::Cover
 cover_db/
@@ -37,5 +39,6 @@ inc/
 # Carton/Carmel
 /local/
 /.carmel/
-# cpanfile.snapshot should generally be ignored for library code, otherwise included
-# cpanfile.snapshot 
+
+# Python venv used for pre-commit
+/.venv/

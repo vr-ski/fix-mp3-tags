@@ -15,19 +15,19 @@ A fast Perl script to fix MP3 tags based on directory structure.
 - Handles CD/Disk subdirectories
 - UTF-8 support for international characters
 - Dry-run mode for preview
-- Fast Perl implementation (2-3x faster than shell scripts)
+- Fast Perl implementation
 
 ## Installation
 
 ### From Source
 ```bash
-git clone https://github.com/yourusername/fix-mp3-tags.git
+git clone https://github.com/vr-ski/fix-mp3-tags.git
 cd fix-mp3-tags
 cpanm --installdeps .
 ```
 
 ### System Requirements
-- Perl 5.34 or higher
+- Perl 5.10 or higher
 - MP3::Tag Perl module
 
 ## Quick Start
@@ -78,7 +78,7 @@ ArtistName/
 ```
 
 ### Supported Date Patterns
-- `2025.11'AlbumName` → Album: "AlbumName" (1989-02)
+- `2025.11'AlbumName` → Album: "AlbumName" (2025-11)
 - `2020-05 Album Name` → Album: "Album Name" (2020-05)
 - `202005AlbumName` → Album: "AlbumName" (2020-05)
 - `AlbumName` → Album: "AlbumName" (no date)
@@ -87,25 +87,25 @@ ArtistName/
 
 ### Command Line Options
 ```
--d, --directory DIR    Process all MP3 files in directory DIR (default: current directory)
--f, --file FILE        Process single MP3 file FILE
--q, --quiet           Display only errors
--p, --pattern PATTERN  Custom album directory pattern (regex)
--n, --dry-run         Preview without processing
--v, --version         Show version
--h, --help            Show this help
+-d, --directory DIR     Process all MP3 files in directory DIR (default: current directory)
+-f, --file FILE         Process single MP3 file FILE
+-q, --quiet             Display only errors
+-p, --pattern PATTERN   Custom album directory pattern (regex)
+-n, --dry-run           Preview without processing
+-v, --version           Show version
+-h, --help              Show this help
 ```
 
 ### Examples
 ```bash
 # Preview with custom pattern
-./bin/fix-mp3-tags -n -p "^([0-9]{4})-([0-9]{2})"
+./bin/fix-mp3-tags -n -p "^([0-9]{4})-([0-9]{2})\s+(.+)$"
 
 # Process with custom pattern
 ./bin/fix-mp3-tags -p "^([0-9]{4})_([0-9]{2})_(.*)"
 
 # Test single file quietly
-./bin/fix-mp3-tags -q -f "Arist/2000.11'Debut Album/01.Hit Single.mp3"
+./bin/fix-mp3-tags -q -f "Artist/2000.11'Debut Album/01.Hit Single.mp3"
 ```
 
 ## Development
@@ -137,11 +137,13 @@ pre-commit run --all-files
 
 ## How It Works
 
-1. **Artist**: Extracted from parent directory name
-2. **Album**: Extracted from directory name (supports various date patterns)
-3. **Track Number**: Extracted from filename (NN.SongName pattern)
-4. **Title**: Extracted from filename (cleaned up)
-5. **Year/Month**: Extracted from directory name if present
+| Tag | Extracted from |
+|---|---|
+| **Artist** | Parent directory name |
+| **Album** | Directory name (supports various date patterns) |
+| **Track Number** | Filename (`NN.SongName` pattern) |
+| **Title** | Filename (cleaned up) |
+| **Year/Month** | Directory name, if present |
 
 ## License
 

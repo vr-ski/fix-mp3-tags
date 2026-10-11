@@ -1,8 +1,6 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::Exception;
-use Path::Tiny;
 
 use_ok('FixMP3Tags::Processor');
 
@@ -50,15 +48,3 @@ foreach my $test (@test_cases) {
 }
 
 done_testing;
-
-#foreach my $test (@test_cases) {
-#    my ($year, $month, $album) = FixMP3Tags::Processor::extract_album_info($test->{input});
-#    # Debug output
-#    diag "Input: '$test->{input}' -> Year: '$year', Month: '$month', Album: '$album'";
-#
-#    is($year, $test->{year}, "Year for $test->{input}");
-#    is($month, $test->{month}, "Month for $test->{input}");
-#    is($album, $test->{album}, "Album for $test->{input}");
-#}
-#
-#done_testing;

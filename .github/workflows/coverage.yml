@@ -1,0 +1,71 @@
+# This workflow is managed by gh actions-lock.
+
+name: Coverage
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  coverage:
+    name: Processor coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.1.0
+
+      - name: Set up Perl
+        uses: shogo82148/actions-setup-perl@v1.44.2
+        with:
+          perl-version: '5.44'
+
+      - name: Install runtime dependencies
+        env:
+          PERL_MM_USE_DEFAULT: 1
+          PERL_EXTUTILS_AUTOINSTALL: --defaultdeps
+        run: cpanm --quiet --notest -l local --installdeps .
+
+      - name: Install coverage dependency
+        env:
+          PERL_MM_USE_DEFAULT: 1
+          PERL_EXTUTILS_AUTOINSTALL: --defaultdeps
+        run: cpanm --quiet --notest -l local Devel::Cover
+
+      - name: Test and report processor coverage
+        env:
+          HARNESS_PERL_SWITCHES: -MDevel::Cover
+          COVERAGE_CHILDREN: '1'
+          PERL5LIB: ${{ github.workspace }}/local/lib/perl5
+        shell: bash
+        run: |
+          set -o pipefail
+          local/bin/cover -delete >/dev/null
+
+          test_log="$(mktemp)"
+          trap 'rm -f "$test_log"' EXIT
+
+          if prove -q -l t/ >"$test_log" 2>&1; then
+            echo "Tests: PASS"
+          else
+            echo "Tests: FAIL"
+            cat "$test_log"
+            exit 1
+          fi
+
+          local/bin/cover -report text | awk '
+            $1 == "lib/FixMP3Tags/Processor.pm" && $2 ~ /^[0-9.]+$/ {
+              printf "Processor coverage: statements=%s%%; branches=%s%%\n", $2, $3
+              found = 1
+            }
+            END {
+              if (!found) {
+                print "ERROR: Processor coverage row not found"
+                exit 1
+              }
+            }
+          '
